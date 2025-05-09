@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SOS Button</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+  </head>
+  <body>
+    <button onclick="sendSOS()" style="position: fixed; bottom: 20px; right: 20px; background: #ff4f91; color: white; padding: 1rem 1.5rem; border: none; border-radius: 50px; font-size: 1rem; font-weight: bold; box-shadow: 0 0 12px rgba(255, 79, 145, 0.6); z-index: 999;">
+      🚨 SOS
+    </button>
+
+    <script>
+      // Replace this with YOUR Firebase config
+      const firebaseConfig = {
+  apiKey: "AIzaSyAP2qFtdSgShiyDFh7zUU3aRr7zcq5ipCM",
+  authDomain: "abcd-4f365.firebaseapp.com",
+  databaseURL: "https://abcd-4f365-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "abcd-4f365",
+  storageBucket: "abcd-4f365.firebasestorage.app",
+  messagingSenderId: "570706173992",
+  appId: "1:570706173992:web:3f6181d71eda086a6fd51d"
+};
+        // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+
+      function sendSOS() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            const timestamp = new Date().toISOString();
+
+            const sosData = {
+              latitude: lat,
+              longitude: lng,
+              timestamp: timestamp
+            };
+
+            db.ref("sos_alerts").push(sosData)
+              .then(() => {
+                alert("🚨 SOS sent with location!");
+              })
+              .catch((error) => {
+                alert("Error sending SOS: " + error.message);
+              });
+          }, function(error) {
+            alert("Error getting location: " + error.message);
+          });
+        } else {
+          alert("Geolocation is not supported by this browser.");
+        }
+      }
+    </script>
+  </body>
+</html>

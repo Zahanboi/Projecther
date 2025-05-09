@@ -47,8 +47,7 @@ function handleFormSubmit(e) {
   const lng1 = parseFloat(document.getElementById("longitude1").value);
   const lat2 = parseFloat(document.getElementById("latitude2").value);
   const lng2 = parseFloat(document.getElementById("longitude2").value);
-  const content1 = document.getElementById("content1").value.trim();
-  const content2 = document.getElementById("content2").value.trim();
+  
 
   if (
     isNaN(lat1) || isNaN(lng1) ||
@@ -147,17 +146,23 @@ async function fetchAndDisplaySavedLocations() {
   list.innerHTML = '';
 
   locations.forEach(loc => {
-    const li = document.createElement('li');
-    li.style.marginBottom = '1em';
+    const div = document.createElement('div');
+    div.className = 'review-card';
 
-    li.innerHTML = `
-      <strong>${loc.content}</strong><br>
-      Lat: ${loc.lat.toFixed(5)}, Lng: ${loc.lng.toFixed(5)}<br>
-      <button onclick="zoomToLocation(${loc.lat}, ${loc.lng})">Zoom</button>
-      <button onclick="deleteLocation(${loc.id})" style="color: red;">Delete</button>
+    div.innerHTML = `
+      <ul id="locationsList">
+      <li>
+      <p class="review-text">${loc.content}</p>
+      <p class="review-meta">— Coordinates: ${loc.lat}, ${loc.lng}</p>
+      
+      <div class="button-group">
+        <button class="zoom-btn" onclick="zoomToLocation(${loc.lat}, ${loc.lng})">Go to Route</button>
+        <button class="delete-btn" onclick="deleteLocation(${loc.id})">Delete Review</button>
+      </div>
+       </li>
     `;
 
-    list.appendChild(li);
+    list.appendChild(div);
   });
 }
 

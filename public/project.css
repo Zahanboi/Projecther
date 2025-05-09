@@ -1,0 +1,803 @@
+
+
+  /* * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+    background: linear-gradient(135deg, #1e1a3e 0%, #291e69 50%, #42348c 100%);
+    color: #e0e0ff;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 25px;
+    background: rgba(30, 26, 62, 0.6);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+  }
+  
+  h1 {
+    color: #a088ff;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 8px rgba(160, 136, 255, 0.4);
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+  }
+  
+  h2, h3 {
+    color: #c8b6ff;
+    margin: 15px 0;
+  }
+  
+  header p {
+    color: #8f7cda;
+    font-size: 1.1rem;
+  }
+  
+  .container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 25px;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .map-container {
+    background: rgba(30, 26, 62, 0.6);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+  }
+  
+  #googleMap {
+    width: 100%;
+    height: 500px;
+    border-radius: 15px 15px 0 0;
+  }
+  
+  .map-instructions {
+    padding: 20px;
+    background: rgba(24, 20, 53, 0.8);
+    border-radius: 0 0 15px 15px;
+    border-top: 1px solid rgba(160, 136, 255, 0.3);
+  }
+  
+  .form-container {
+    background: rgba(30, 26, 62, 0.6);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+  }
+  
+  #addMarkerForm {
+    display: grid;
+    gap: 15px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(160, 136, 255, 0.2);
+    padding-bottom: 15px;
+  }
+  
+  .form-group:last-child {
+    border-bottom: none;
+  }
+  
+  .coordinates-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(160, 136, 255, 0.3);
+    border-radius: 8px;
+    font-size: 14px;
+    background: rgba(24, 20, 53, 0.6);
+    color: #e0e0ff;
+    transition: all 0.3s ease;
+  }
+  
+  input::placeholder {
+    color: rgba(160, 136, 255, 0.6);
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #a088ff;
+    box-shadow: 0 0 0 2px rgba(160, 136, 255, 0.3);
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  #addMarkerForm button {
+    background: linear-gradient(45deg, #7e57ff 0%, #a088ff 100%);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(126, 87, 255, 0.4);
+  }
+  
+  #addMarkerForm button:hover {
+    background: linear-gradient(45deg, #8f6aff 0%, #b59bff 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(126, 87, 255, 0.6);
+  }
+  
+  #savedLocations {
+    background: rgba(30, 26, 62, 0.6);
+    margin-top: 25px;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+  }
+  
+  #locationsList {
+    list-style: none;
+  }
+  
+  .location-item {
+    border-bottom: 1px solid rgba(160, 136, 255, 0.2);
+    padding: 18px 0;
+  }
+  
+  .location-item:last-child {
+    border-bottom: none;
+  }
+  
+  .location-info {
+    margin-bottom: 15px;
+  }
+  
+  .location-info strong {
+    color: #a088ff;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .location-coordinates {
+    color: #8f7cda;
+    font-size: 0.9rem;
+    background: rgba(24, 20, 53, 0.6);
+    padding: 6px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 5px;
+  }
+  
+  .location-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .btn-zoom {
+    background: linear-gradient(45deg, #49a09d 0%, #5cdbd3 100%);
+    box-shadow: 0 4px 12px rgba(76, 211, 206, 0.4);
+    flex: 1;
+  }
+  
+  .btn-zoom:hover {
+    background: linear-gradient(45deg, #5ab8b5 0%, #6bebdf 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(76, 211, 206, 0.6);
+  }
+  
+  .btn-delete {
+    background: linear-gradient(45deg, #ff5e7c 0%, #ff7eb3 100%);
+    box-shadow: 0 4px 12px rgba(255, 94, 124, 0.4);
+    flex: 1;
+  }
+  
+  .btn-delete:hover {
+    background: linear-gradient(45deg, #ff708c 0%, #ff8ec0 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 94, 124, 0.6);
+  }
+  
+  .footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #8f7cda;
+    font-size: 14px;
+    padding: 15px;
+    border-top: 1px solid rgba(160, 136, 255, 0.2);
+  }
+  
+  /* Animation for loading state */
+  /* @keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+  }
+  
+  .loading {
+    animation: pulse 1.5s infinite;
+  }
+  
+  /* Custom scrollbar */
+  /* ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(24, 20, 53, 0.6);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #7e57ff;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a088ff;
+  }
+  
+  /* Badge style */
+  /* .badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-left: 5px;
+    background: rgba(160, 136, 255, 0.2);
+    color: #a088ff;
+    border: 1px solid rgba(160, 136, 255, 0.3);
+  }    */
+
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: all 0.3s ease;
+  }
+  
+  body {
+    background: linear-gradient(135deg, #0a1128 0%, #132046 50%, #1c2c5e 100%);
+    color: #e6eeff;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 25px;
+    background: rgba(14, 22, 48, 0.6);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(86, 125, 244, 0.15);
+    backdrop-filter: blur(8px);
+    transform: translateY(0);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  
+  header:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 15px rgba(86, 125, 244, 0.3);
+  }
+  
+  h1 {
+    color: #70a9ff;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 8px rgba(112, 169, 255, 0.4);
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+  }
+  
+  h2, h3 {
+    color: #a3c2ff;
+    margin: 15px 0;
+  }
+  
+  header p {
+    color: #819ecf;
+    font-size: 1.1rem;
+  }
+  
+  .container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 25px;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .map-container {
+    background: rgba(14, 22, 48, 0.6);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(86, 125, 244, 0.15);
+    backdrop-filter: blur(8px);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  
+  .map-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 15px rgba(86, 125, 244, 0.3);
+  }
+  
+  #googleMap {
+    width: 100%;
+    height: 500px;
+    border-radius: 15px 15px 0 0;
+  }
+  
+  .map-instructions {
+    padding: 20px;
+    background: rgba(10, 17, 40, 0.8);
+    border-radius: 0 0 15px 15px;
+    border-top: 1px solid rgba(86, 125, 244, 0.2);
+  }
+  
+  .map-instructions strong {
+    color: #70a9ff;
+  }
+  
+  .form-container {
+    background: rgba(14, 22, 48, 0.6);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(86, 125, 244, 0.15);
+    backdrop-filter: blur(8px);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  
+  .form-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 15px rgba(86, 125, 244, 0.3);
+  }
+  
+  #addMarkerForm {
+    display: grid;
+    gap: 15px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(86, 125, 244, 0.2);
+    padding-bottom: 15px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .form-group:hover {
+    border-color: rgba(112, 169, 255, 0.5);
+    transform: translateX(5px);
+  }
+  
+  .form-group:last-child {
+    border-bottom: none;
+  }
+  
+  .coordinates-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(86, 125, 244, 0.3);
+    border-radius: 8px;
+    font-size: 14px;
+    background: rgba(10, 17, 40, 0.6);
+    color: #e6eeff;
+    transition: all 0.3s ease;
+  }
+  
+  input::placeholder {
+    color: rgba(112, 169, 255, 0.6);
+  }
+  
+  input:hover {
+    border-color: rgba(112, 169, 255, 0.6);
+    box-shadow: 0 0 10px rgba(112, 169, 255, 0.2);
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #70a9ff;
+    box-shadow: 0 0 0 2px rgba(112, 169, 255, 0.3), 0 0 15px rgba(112, 169, 255, 0.2);
+    transform: scale(1.02);
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  #addMarkerForm button {
+    background: linear-gradient(45deg, #3060cf 0%, #70a9ff 100%);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(48, 96, 207, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  #addMarkerForm button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.5s ease;
+  }
+  
+  #addMarkerForm button:hover {
+    background: linear-gradient(45deg, #3a6fd9 0%, #82b5ff 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(48, 96, 207, 0.6);
+  }
+  
+  #addMarkerForm button:hover::before {
+    left: 100%;
+  }
+  
+  #savedLocations {
+    background: rgba(14, 22, 48, 0.6);
+    margin-top: 25px;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(86, 125, 244, 0.15);
+    backdrop-filter: blur(8px);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  
+  #savedLocations:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 15px rgba(86, 125, 244, 0.3);
+  }
+  
+  #locationsList {
+    list-style: none;
+  }
+  
+  .location-item {
+    border-bottom: 1px solid rgba(86, 125, 244, 0.2);
+    padding: 18px 0;
+    transition: transform 0.3s ease, background-color 0.3s ease, border-radius 0.3s ease;
+  }
+  
+  .location-item:hover {
+    transform: translateX(5px);
+    background-color: rgba(25, 35, 65, 0.4);
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .location-item:last-child {
+    border-bottom: none;
+  }
+  
+  .location-info {
+    margin-bottom: 15px;
+  }
+  
+  .location-info strong {
+    color: #70a9ff;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
+  }
+  
+  .location-item:hover .location-info strong {
+    color: #a3c2ff;
+  }
+  
+  .location-coordinates {
+    color: #819ecf;
+    font-size: 0.9rem;
+    background: rgba(10, 17, 40, 0.6);
+    padding: 6px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .location-coordinates:hover {
+    background: rgba(16, 28, 60, 0.8);
+    transform: scale(1.05);
+  }
+  
+  .location-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .btn-zoom {
+    background: linear-gradient(45deg, #2c8ba3 0%, #5ac8e0 100%);
+    box-shadow: 0 4px 12px rgba(44, 139, 163, 0.4);
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-zoom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.5s ease;
+  }
+  
+  .btn-zoom:hover {
+    background: linear-gradient(45deg, #36a0ba 0%, #6ad4ea 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(44, 139, 163, 0.6);
+  }
+  
+  .btn-zoom:hover::before {
+    left: 100%;
+  }
+  
+  .btn-delete {
+    background: linear-gradient(45deg, #c03a55 0%, #e45a76 100%);
+    box-shadow: 0 4px 12px rgba(192, 58, 85, 0.4);
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-delete::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.5s ease;
+  }
+  
+  .btn-delete:hover {
+    background: linear-gradient(45deg, #d44762 0%, #f06d87 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(192, 58, 85, 0.6);
+  }
+  
+  .btn-delete:hover::before {
+    left: 100%;
+  }
+  
+  .footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #819ecf;
+    font-size: 14px;
+    padding: 15px;
+    border-top: 1px solid rgba(86, 125, 244, 0.2);
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .footer:hover {
+    border-color: rgba(112, 169, 255, 0.5);
+    color: #a3c2ff;
+  }
+  
+  /* Animation for loading state */
+  @keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+  }
+  
+  .loading {
+    animation: pulse 1.5s infinite;
+  }
+  
+  /* Shine effects for elements */
+  @keyframes shineEffect {
+    0% {
+      background-position: -100% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  h1::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(112, 169, 255, 0.4), transparent);
+    background-size: 200% 100%;
+    animation: shineEffect 3s infinite;
+    z-index: -1;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(10, 17, 40, 0.6);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #3060cf;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #70a9ff;
+  }
+  
+  /* Badge style */
+  .badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-left: 5px;
+    background: rgba(86, 125, 244, 0.2);
+    color: #70a9ff;
+    border: 1px solid rgba(86, 125, 244, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .badge:hover {
+    background: rgba(112, 169, 255, 0.3);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(112, 169, 255, 0.4);
+  }
+  
+  /* Tooltip styles */
+  [data-tooltip] {
+    position: relative;
+    cursor: help;
+  }
+  
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    background-color: rgba(14, 22, 48, 0.9);
+    color: #e6eeff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(86, 125, 244, 0.3);
+  }
+  
+  [data-tooltip]:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    bottom: 135%;
+  }
+  
+  /* Ripple effect for buttons */
+  .ripple {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+  }
+  
+  .ripple:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+  }
+  
+  @keyframes ripple {
+    0% {
+      transform: scale(0, 0) translate(-50%, -50%);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(20, 20) translate(-50%, -50%);
+      opacity: 0;
+    }
+  }
+  
+  /* Overlay effect for form groups on hover */
+  .form-group::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(112, 169, 255, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  .form-group:hover::after {
+    opacity: 1;
+  }
+  
+  /* Glow effect on focus within form groups */
+  .form-group:focus-within {
+    box-shadow: 0 0 15px rgba(112, 169, 255, 0.15);
+  }

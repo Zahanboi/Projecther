@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArmorHer - Safety Resources</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #1a1a2e;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #1a1a2e;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff6b9d;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-menu a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+            padding: 5px 0;
+        }
+        
+        .nav-menu a.active {
+            color: #fff;
+            border-bottom: 2px solid #ff6b9d;
+            padding-bottom: 5px;
+        }
+        
+        .nav-menu a:hover {
+            color: #fff;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .emergency-btn {
+            background-color: #ff3860;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .icon-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .icon-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 70px;
+            background-color: #1a1a2e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 70px;
+            height: calc(100vh - 70px);
+        }
+        
+        .sidebar-icon {
+            color: #ccc;
+            font-size: 20px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .sidebar-icon:hover {
+            color: #fff;
+        }
+        
+        .sidebar-icon.active {
+            color: #ff6b9d;
+        }
+        
+        .sidebar-divider {
+            height: 1px;
+            width: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 15px 0;
+        }
+        
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 30px;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+        
+        .page-title i {
+            color: #ff6b9d;
+            margin-right: 15px;
+        }
+        
+        /* Resource Categories */
+        .categories {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .category-btn {
+            background-color: rgba(40, 40, 70, 0.5);
+            border: none;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .category-btn:hover {
+            background-color: rgba(60, 60, 90, 0.5);
+        }
+        
+        .category-btn.active {
+            background-color: #ff6b9d;
+        }
+        
+        /* Featured Resource */
+        .featured-resource {
+            background-color: rgba(30, 30, 60, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+        }
+        
+        @media (min-width: 768px) {
+            .featured-resource {
+                flex-direction: row;
+                height: 300px;
+            }
+        }
+        
+        .featured-image {
+            flex: 1;
+            min-height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .featured-tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #ff6b9d;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .featured-content {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .featured-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .featured-description {
+            color: #ccc;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .read-more-btn {
+            align-self: flex-start;
+            background-color: #ff6b9d;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .read-more-btn:hover {
+            background-color: #ff5c8f;
+        }
+        
+        /* Resources Grid */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .resource-card {
+            background-color: rgba(30, 30, 60, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .resource-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .resource-tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #ff6b9d;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .resource-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .resource-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .resource-description {
+            color: #ccc;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex: 1;
+        }
+        
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #aaa;
+            font-size: 12px;
+        }
+        
+        .resource-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #ff6b9d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 10px;
+            margin-right: 8px;
+        }
+        
+        /* Safety Tips Section */
+        .tips-section {
+            background-color: rgba(30, 30, 60, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-width: 1200px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            color: #ff6b9d;
+            margin-right: 10px;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .tip-card {
+            background-color: rgba(40, 40, 70, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .tip-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(50, 50, 80, 0.5);
+        }
+        
+        .tip-icon {
+            color: #ff6b9d;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .tip-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .tip-content {
+            color: #ccc;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* External Resources */
+        .external-resources {
+            background-color: rgba(30, 30, 60, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-width: 1200px;
+        }
+        
+        .resources-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .resource-link {
+            display: flex;
+            align-items: center;
+            background-color: rgba(40, 40, 70, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            text-decoration: none;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+        
+        .resource-link:hover {
+            background-color: rgba(50, 50, 80, 0.5);
+        }
+        
+        .resource-link-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: #ff6b9d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .resource-link-content {
+            flex: 1;
+        }
+        
+        .resource-link-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .resource-link-description {
+            color: #ccc;
+            font-size: 12px;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background-color: rgba(30, 30, 60, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-width: 1200px;
+        }
+        
+        .newsletter-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .newsletter-description {
+            color: #ccc;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 10px;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            background-color: rgba(40, 40, 70, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px 0 0 20px;
+            padding: 10px 20px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .newsletter-btn {
+            background-color: #ff6b9d;
+            color: white;
+            border: none;
+            border-radius: 0 20px 20px 0;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-btn:hover {
+            background-color: #ff5c8f;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .newsletter-form {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .newsletter-input {
+                border-radius: 20px;
+            }
+            
+            .newsletter-btn {
+                border-radius: 20px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">ArmorHer</div>
+        <div class="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="#" class="active">Safety Resources</a>
+            <a href="community.html">Community</a>
+            <a href="profile.html">Profile</a>
+        </div>
+        <div class="header-actions">
+            <button class="emergency-btn">Emergency SOS</button>
+            <button class="icon-btn"><i class="fas fa-bell"></i></button>
+            <button class="icon-btn"><i class="fas fa-user"></i></button>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-icon"><a href="index.html" style="color:inherit;"><i class="fas fa-home"></i></a></div>
+            <div class="sidebar-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="sidebar-icon active"><i class="fas fa-book"></i></div>
+            <div class="sidebar-icon"><a href="community.html" style="color:inherit;"><i class="fas fa-users"></i></a></div>
+            <div class="sidebar-icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="sidebar-icon"><a href="profile.html" style="color:inherit;"><i class="fas fa-cog"></i></a></div>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-icon"><i class="fas fa-question-circle"></i></div>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-icon"><i class="fas fa-sign-out-alt"></i></div>
+        </div>
+        
+        <!-- Content Area -->
+        <div class="content">
+            <h1 class="page-title"><i class="fas fa-book"></i> Safety Resources</h1>
+            
+            <!-- Resource Categories -->
+            <div class="categories">
+                <button class="category-btn active">All Resources</button>
+                <button class="category-btn">Self Defense</button>
+                <button class="category-btn">Personal Safety</button>
+                <button class="category-btn">Travel Safety</button>
+                <button class="category-btn">Digital Security</button>
+                <button class="category-btn">Workplace Safety</button>
+                <button class="category-btn">Emergency Preparedness</button>
+            </div>
+            
+            <!-- Featured Resource -->
+            <div class="featured-resource">
+                <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1573497620053-ea5300f94f21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHdvbWVuJTIwc2FmZXR5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60')">
+                    <div class="featured-tag">FEATURED</div>
+                </div>
+                <div class="featured-content">
+                    <h2 class="featured-title">The Complete Guide to Self-Defense Techniques for Women</h2>
+                    <p class="featured-description">Learn practical self-defense techniques that can help you protect yourself in potentially dangerous situations. This comprehensive guide covers basic moves, situational awareness, and psychological preparation.</p>
+                    <button class="read-more-btn">Read Full Guide</button>
+                </div>
+            </div>
+            
+            <!-- Latest Resources -->
+            <h2 class="section-title"><i class="fas fa-newspaper"></i> Latest Safety Articles</h2>
+            <div class="resources-grid">
+                <!-- Resource 1 -->
+                <div class="resource-card">
+                    <div class="resource-image" style="background-image: url('https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZGlnaXRhbCUyMHNlY3VyaXR5fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60')">
+                        <div class="resource-tag">Digital Security</div>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Protecting Your Digital Footprint: Online Safety Guide</h3>
+                        <p class="resource-description">Learn how to secure your online accounts, protect your personal information, and avoid common digital threats in this comprehensive guide.</p>
+                        <div class="resource-meta">
+                            <div class="resource-author">
+                                <div class="author-avatar">JD</div>
+                                <span>Jane Doe</span>
+                            </div>
+                            <div class="resource-date">May 15, 2023</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Resource 2 -->
+                <div class="resource-card">
+                    <div class="resource-image" style="background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJhdmVsfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60')">
+                        <div class="resource-tag">Travel Safety</div>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Solo Travel Safety: Tips for Women Exploring the World</h3>
+                        <p class="resource-description">Essential safety tips for women traveling alone, including pre-trip planning, accommodation safety, and navigating unfamiliar environments.</p>
+                        <div class="resource-meta">
+                            <div class="resource-author">
+                                <div class="author-avatar" style="background-color: #9b59b6;">AS</div>
+                                <span>Amanda Smith</span>
+                            </div>
+                            <div class="resource-date">April 28, 2023</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Resource 3 -->
+                <div class="resource-card">
+                    <div class="resource-image" style="background-image: url('https://images.unsplash.com/photo-1590856029826-c7a73142bbf1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHdvcmtwbGFjZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60')">
+                        <div class="resource-tag">Workplace Safety</div>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Navigating Workplace Safety: Rights and Resources</h3>
+                        <p class="resource-description">Understanding your rights in the workplace, identifying potential safety concerns, and accessing resources for support and reporting.</p>
+                        <div class="resource-meta">
+                            <div class="resource-author">
+                                <div class="author-avatar" style="background-color: #2ecc71;">RJ</div>
+                                <span>Rachel Johnson</span>
+                            </div>
+                            <div class="resource-date">April 10, 2023</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Resource 4 -->
+                <div class="resource-card">
+                    <div class="resource-image" style="background-image: url('https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZW1lcmdlbmN5fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60')">
+                        <div class="resource-tag">Emergency Preparedness</div>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Creating Your Personal Emergency Plan</h3>
+                        <p class="resource-description">Step-by-step guide to developing a comprehensive emergency plan, including communication strategies, essential supplies, and evacuation procedures.</p>
+                        <div class="resource-meta">
+                            <div class="resource-author">
+                                <div class="author-avatar" style="background-color: #e74c3c;">ST</div>
+                                <span>Safety Team</span>
+                            </div>
+                            <div class="resource-date">March 22, 2023</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Resource 5 -->
+                <div class="resource-card">
+                    <div class="resource-image" style="background-image: url('https://images.unsplash.com/photo-1551739440-5dd934d3a94a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvbmUlMjBzZWN1cml0eXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60')">
+                        <div class="resource-tag">Personal Safety</div>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Safety Apps Every Woman Should Have</h3>
+                        <p class="resource-description">A curated list of the most effective safety applications for smartphones, with features like location sharing, emergency alerts, and community support.</p>
+                        <div class="resource-meta">
+                            <div class="resource-author">
+                                <div class="author-avatar" style="background-color: #3498db;">LT</div>
+                                <span>Lisa Taylor</span>
+                            </div>
+                            <div class="resource-date">March 15, 2023</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Resource 6 -->
+                <div class="resource-card">
+                    <div class="resource-image" style="background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2VsZiUyMGRlZmVuc2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60')">
+                        <div class="resource-tag">Self Defense</div>
+                    </div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Finding the Right Self-Defense Class: What to Look For</h3>
+                        <p class="resource-description">Guidance on selecting a self-defense program that meets your needs, including instructor qualifications, teaching methods, and practical considerations.</p>
+                        <div class="resource-meta">
+                            <div class="resource-author">
+                                <div class="author-avatar" style="background-color: #f39c12;">KW</div>
+                                <span>Karen Wilson</span>
+                            </div>
+                            <div class="resource-date">February 28, 2023</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Safety Tips -->
+            <div class="tips-section">
+                <h2 class="section-title"><i class="fas fa-lightbulb"></i> Quick Safety Tips</h2>
+                <div class="tips-grid">
+                    <!-- Tip 1 -->
+                    <div class="tip-card">
+                        <div class="tip-icon"><i class="fas fa-walking"></i></div>
+                        <h3 class="tip-title">Street Safety</h3>
+                        <p class="tip-content">Walk confidently and stay aware of your surroundings. Avoid using headphones or being distracted by your phone in unfamiliar areas.</p>
+                    </div>
+                    
+                    <!-- Tip 2 -->
+                    <div class="tip-card">
+                        <div class="tip-icon"><i class="fas fa-car"></i></div>
+                        <h3 class="tip-title">Transportation Safety</h3>
+                        <p class="tip-content">Always check the identity of your rideshare driver. Share your trip details with a trusted contact when using taxis or rideshares.</p>
+                    </div>
+                    
+                    <!-- Tip 3 -->
+                    <div class="tip-card">
+                        <div class="tip-icon"><i class="fas fa-home"></i></div>
+                        <h3 class="tip-title">Home Security</h3>
+                        <p class="tip-content">Install quality locks on all doors and windows. Consider adding a security system or doorbell camera for additional protection.</p>
+                    </div>
+                    
+                    <!-- Tip 4 -->
+                    <div class="tip-card">
+                        <div class="tip-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <h3 class="tip-title">Phone Preparedness</h3>
+                        <p class="tip-content">Keep your phone charged and accessible. Program emergency contacts for quick access and consider safety apps with location sharing.</p>
+                    </div>
+                    
+                    <!-- Tip 5 -->
+                    <div class="tip-card">
+                        <div class="tip-icon"><i class="fas fa-users"></i></div>
+                        <h3 class="tip-title">Social Situations</h3>
+                        <p class="tip-content">Trust your instincts in social settings. Establish a code word with friends to signal when you need help or want to leave a situation.</p>
+                    </div>
+                    
+                    <!-- Tip 6 -->
+                    <div class="tip-card">
+                        <div class="tip-icon"><i class="fas fa-globe"></i></div>
+                        <h3 class="tip-title">Travel Awareness</h3>
+                        <p class="tip-content">Research your destination before traveling. Learn about safe areas, local customs, and emergency services available to visitors.</p>
+                    </div>
+                    
+                    <!-- Tip 7 -->
+                    <div class="tip-card">
+                        <div class="tip-icon"><i class="fas fa-key"></i></div>
+                        <h3 class="tip-title">Digital Privacy</h3>
+                        <p class="tip-content">Use strong, unique passwords for all accounts. Enable two-factor authentication whenever possible and regularly review privacy settings.</p>
+                    </div>
+                    
+                    <!-- Tip 8 -->
+                    <div class="tip-card">
+                        <div class="tip-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <h3 class="tip-title">Trust Your Instincts</h3>
+                        <p class="tip-content">If something feels wrong, it probably is. Don't ignore your intuition—it's one of your most powerful safety tools.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- External Resources -->
+            <div class="external-resources">
+                <h2 class="section-title"><i class="fas fa-link"></i> Helpful Links & Resources</h2>
+                <div class="resources-list">
+                    <!-- Link 1 -->
+                    <a href="#" class="resource-link">
+                        <div class="resource-link-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="resource-link-content">
+                            <div class="resource-link-title">National Domestic Violence Hotline</div>
+                            <div class="resource-link-description">24/7 confidential support for anyone affected by domestic violence</div>
+                        </div>
+                    </a>
+                    
+                    <!-- Link 2 -->
+                    <a href="#" class="resource-link">
+                        <div class="resource-link-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="resource-link-content">
+                            <div class="resource-link-title">RAINN (Rape, Abuse & Incest National Network)</div>
+                            <div class="resource-link-description">Resources for sexual assault survivors</div>
+                        </div>
+                    </a>
+                    
+                    <!-- Link 3 -->
+                    <a href="#" class="resource-link">
+                        <div class="resource-link-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="resource-link-content">
+                            <div class="resource-link-title">Self-Defense Training Directory</div>
+                            <div class="resource-link-description">Find certified self-defense classes in your area</div>
+                        </div>
+                    </a>
+                    
+                    <!-- Link 4 -->
+                    <a href="#" class="resource-link">
+                        <div class="resource-link-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="resource-link-content">
+                            <div class="resource-link-title">Women's Safety Network</div>
+                            <div class="resource-link-description">Educational resources and community support</div>
+                        </div>
+                    </a>
+                    
+                    <!-- Link 5 -->
+                    <a href="#" class="resource-link">
+                        <div class="resource-link-icon">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <div class="resource-link-content">
+                            <div class="resource-link-title">Legal Resources for Women</div>
+                            <div class="resource-link-description">Information on legal rights and assistance</div>
+                        </div>
+                    </a>
+                    
+                    <!-- Link 6 -->
+                    <a href="#" class="resource-link">
+                        <div class="resource-link-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="resource-link-content">
+                            <div class="resource-link-title">Safe Shelter Locator</div>
+                            <div class="resource-link-description">Find emergency shelters and safe houses</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Newsletter -->
+            <div class="newsletter">
+                <div class="newsletter-content">
+                    <h2 class="newsletter-title">Stay Updated with Safety Resources</h2>
+                    <p class="newsletter-description">Subscribe to our newsletter to receive the latest safety tips, resources, and updates directly in your inbox. We send monthly digests with practical information to help you stay safe.</p>
+                    <form class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="Your email address">
+                        <button type="submit" class="newsletter-btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

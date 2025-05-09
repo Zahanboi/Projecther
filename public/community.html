@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeGuard - Community Feed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #1a1a2e;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff6b9d;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-menu a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a.active {
+            color: #fff;
+            border-bottom: 2px solid #ff6b9d;
+            padding-bottom: 5px;
+        }
+        
+        .nav-menu a:hover {
+            color: #fff;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .emergency-btn {
+            background-color: #ff3860;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .icon-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .icon-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            height: calc(100vh - 70px);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 70px;
+            background-color: rgba(26, 26, 46, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .sidebar-icon {
+            color: #ccc;
+            font-size: 20px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .sidebar-icon:hover {
+            color: #fff;
+        }
+        
+        .sidebar-icon.active {
+            color: #ff6b9d;
+        }
+        
+        .sidebar-divider {
+            height: 1px;
+            width: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 15px 0;
+        }
+        
+        /* Content Area */
+        .content {
+            flex: 1;
+            background-color: #1a1a2e;
+            position: relative;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        
+        .content-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+        
+        .page-title i {
+            color: #ff6b9d;
+            margin-right: 15px;
+        }
+        
+        /* Community Feed */
+        .create-post {
+            background-color: rgba(30, 30, 60, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .create-post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ff6b9d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .post-input {
+            flex: 1;
+            background-color: rgba(40, 40, 70, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 10px 20px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .post-input::placeholder {
+            color: #aaa;
+        }
+        
+        .create-post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .post-attachments {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .attachment-btn {
+            display: flex;
+            align-items: center;
+            color: #ccc;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .attachment-btn i {
+            margin-right: 5px;
+        }
+        
+        .attachment-btn:hover {
+            color: #fff;
+        }
+        
+        .post-btn {
+            background-color: #ff6b9d;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        /* Feed Posts */
+        .feed-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .post {
+            background-color: rgba(30, 30, 60, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .post-user-info {
+            margin-left: 15px;
+        }
+        
+        .post-username {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .post-time {
+            color: #aaa;
+            font-size: 12px;
+        }
+        
+        .post-content {
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .post-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            max-height: 300px;
+            object-fit: cover;
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .post-action {
+            display: flex;
+            align-items: center;
+            color: #ccc;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .post-action i {
+            margin-right: 5px;
+        }
+        
+        .post-action:hover {
+            color: #fff;
+        }
+        
+        .post-action.liked {
+            color: #ff6b9d;
+        }
+        
+        .post-comments {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .comment {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .comment-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #9b59b6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+        
+        .comment-content {
+            flex: 1;
+            background-color: rgba(40, 40, 70, 0.5);
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 13px;
+        }
+        
+        .comment-user {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .add-comment {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .comment-input {
+            flex: 1;
+            background-color: rgba(40, 40, 70, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 8px 15px;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+            margin-left: 10px;
+        }
+        
+        .comment-input::placeholder {
+            color: #aaa;
+        }
+        
+        /* Tags */
+        .tag {
+            display: inline-block;
+            background-color: rgba(255, 107, 157, 0.2);
+            color: #ff6b9d;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        /* Trending Topics */
+        .trending-section {
+            position: fixed;
+            right: 30px;
+            top: 100px;
+            background-color: rgba(30, 30, 60, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            width: 280px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .trending-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .trending-header i {
+            color: #ff6b9d;
+            margin-right: 10px;
+        }
+        
+        .trending-topics {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .trending-topic {
+            display: flex;
+            align-items: center;
+        }
+        
+        .topic-number {
+            font-size: 14px;
+            color: #aaa;
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .topic-content {
+            flex: 1;
+        }
+        
+        .topic-tag {
+            font-size: 12px;
+            color: #ff6b9d;
+            margin-bottom: 3px;
+        }
+        
+        .topic-title {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .topic-posts {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 3px;
+        }
+        
+        @media (max-width: 1200px) {
+            .trending-section {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">SafeGuard</div>
+        <div class="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="#" class="active">Community</a>
+            <a href="#">Safety Tips</a>
+            <a href="profile.html">Profile</a>
+        </div>
+        <div class="header-actions">
+            <button class="emergency-btn">Emergency SOS</button>
+            <button class="icon-btn"><i class="fas fa-bell"></i></button>
+            <button class="icon-btn"><i class="fas fa-user"></i></button>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-icon"><i class="fas fa-home"></i></div>
+            <div class="sidebar-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="sidebar-icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="sidebar-icon active"><i class="fas fa-users"></i></div>
+            <div class="sidebar-icon"><i class="fas fa-book"></i></div>
+            <div class="sidebar-icon"><i class="fas fa-cog"></i></div>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-icon"><i class="fas fa-question-circle"></i></div>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-icon"><i class="fas fa-sign-out-alt"></i></div>
+        </div>
+        
+        <!-- Content Area -->
+        <div class="content">
+            <div class="content-inner">
+                <h1 class="page-title"><i class="fas fa-users"></i> Community Feed</h1>
+                
+                <!-- Create Post -->
+                <div class="create-post">
+                    <div class="create-post-header">
+                        <div class="user-avatar">S</div>
+                        <input type="text" class="post-input" placeholder="Share your safety experience or tips...">
+                    </div>
+                    <div class="create-post-actions">
+                        <div class="post-attachments">
+                            <div class="attachment-btn">
+                                <i class="fas fa-image"></i> Photo
+                            </div>
+                            <div class="attachment-btn">
+                                <i class="fas fa-map-marker-alt"></i> Location
+                            </div>
+                            <div class="attachment-btn">
+                                <i class="fas fa-tag"></i> Tag
+                            </div>
+                        </div>
+                        <button class="post-btn">Post</button>
+                    </div>
+                </div>
+                
+                <!-- Feed Posts -->
+                <div class="feed-posts">
+                    <!-- Post 1 -->
+                    <div class="post">
+                        <div class="post-header">
+                            <div class="user-avatar">J</div>
+                            <div class="post-user-info">
+                                <div class="post-username">Jessica M.</div>
+                                <div class="post-time">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p>Just attended an amazing self-defense workshop organized by SafeGuard! Learned so many practical techniques that I can use in emergency situations. Highly recommend to all women in the community.</p>
+                            <div class="tag">#SelfDefense</div>
+                            <div class="tag">#SafetyWorkshop</div>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c2VsZiUyMGRlZmVuc2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="Self Defense Workshop" class="post-image">
+                        <div class="post-actions">
+                            <div class="post-action liked">
+                                <i class="fas fa-heart"></i> 42 Likes
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-comment"></i> 8 Comments
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-share"></i> Share
+                            </div>
+                        </div>
+                        <div class="post-comments">
+                            <div class="comment">
+                                <div class="comment-avatar">L</div>
+                                <div class="comment-content">
+                                    <div class="comment-user">Lisa T.</div>
+                                    <p>I attended this too! The instructor was amazing and I feel so much more confident now.</p>
+                                </div>
+                            </div>
+                            <div class="comment">
+                                <div class="comment-avatar">M</div>
+                                <div class="comment-content">
+                                    <div class="comment-user">Maria K.</div>
+                                    <p>When is the next workshop? I'd love to join!</p>
+                                </div>
+                            </div>
+                            <div class="add-comment">
+                                <div class="comment-avatar">S</div>
+                                <input type="text" class="comment-input" placeholder="Write a comment...">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Post 2 -->
+                    <div class="post">
+                        <div class="post-header">
+                            <div class="user-avatar" style="background-color: #3498db;">A</div>
+                            <div class="post-user-info">
+                                <div class="post-username">Amanda R.</div>
+                                <div class="post-time">Yesterday</div>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p>Safety tip: Always share your live location with a trusted contact when traveling alone, especially at night. The SafeGuard app makes this super easy with just one tap!</p>
+                            <div class="tag">#SafetyTip</div>
+                            <div class="tag">#NightSafety</div>
+                        </div>
+                        <div class="post-actions">
+                            <div class="post-action">
+                                <i class="fas fa-heart"></i> 28 Likes
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-comment"></i> 5 Comments
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-share"></i> Share
+                            </div>
+                        </div>
+                        <div class="post-comments">
+                            <div class="comment">
+                                <div class="comment-avatar" style="background-color: #2ecc71;">R</div>
+                                <div class="comment-content">
+                                    <div class="comment-user">Rachel P.</div>
+                                    <p>This feature has been a lifesaver for me! I use it every time I take a cab.</p>
+                                </div>
+                            </div>
+                            <div class="add-comment">
+                                <div class="comment-avatar">S</div>
+                                <input type="text" class="comment-input" placeholder="Write a comment...">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Post 3 -->
+                    <div class="post">
+                        <div class="post-header">
+                            <div class="user-avatar" style="background-color: #e74c3c;">S</div>
+                            <div class="post-user-info">
+                                <div class="post-username">SafeGuard Team</div>
+                                <div class="post-time">2 days ago</div>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p>We're excited to announce our new partnership with local police departments to create more safe zones in the city. These designated areas will have enhanced security measures and direct lines to emergency services.</p>
+                            <div class="tag">#SafeZones</div>
+                            <div class="tag">#CommunityPartnership</div>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1555661530-68c8e98db4e6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cG9saWNlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Police Partnership" class="post-image">
+                        <div class="post-actions">
+                            <div class="post-action">
+                                <i class="fas fa-heart"></i> 156 Likes
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-comment"></i> 23 Comments
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-share"></i> Share
+                            </div>
+                        </div>
+                        <div class="post-comments">
+                            <div class="comment">
+                                <div class="comment-avatar" style="background-color: #9b59b6;">K</div>
+                                <div class="comment-content">
+                                    <div class="comment-user">Karen L.</div>
+                                    <p>This is amazing news! Will these safe zones be marked on the app map?</p>
+                                </div>
+                            </div>
+                            <div class="comment">
+                                <div class="comment-avatar" style="background-color: #e74c3c;">S</div>
+                                <div class="comment-content">
+                                    <div class="comment-user">SafeGuard Team</div>
+                                    <p>Yes, they will be clearly marked on the map with a special icon. We'll be rolling out the update next week!</p>
+                                </div>
+                            </div>
+                            <div class="add-comment">
+                                <div class="comment-avatar">S</div>
+                                <input type="text" class="comment-input" placeholder="Write a comment...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trending Topics -->
+            <div class="trending-section">
+                <div class="trending-header">
+                    <i class="fas fa-chart-line"></i> Trending Topics
+                </div>
+                <div class="trending-topics">
+                    <div class="trending-topic">
+                        <div class="topic-number">1</div>
+                        <div class="topic-content">
+                            <div class="topic-tag">#SelfDefense</div>
+                            <div class="topic-title">Self Defense Techniques</div>
+                            <div class="topic-posts">128 posts</div>
+                        </div>
+                    </div>
+                    <div class="trending-topic">
+                        <div class="topic-number">2</div>
+                        <div class="topic-content">
+                            <div class="topic-tag">#SafeZones</div>
+                            <div class="topic-title">New Safe Zones</div>
+                            <div class="topic-posts">96 posts</div>
+                        </div>
+                    </div>
+                    <div class="trending-topic">
+                        <div class="topic-number">3</div>
+                        <div class="topic-content">
+                            <div class="topic-tag">#SafetyTips</div>
+                            <div class="topic-title">Night Travel Safety</div>
+                            <div class="topic-posts">87 posts</div>
+                        </div>
+                    </div>
+                    <div class="trending-topic">
+                        <div class="topic-number">4</div>
+                        <div class="topic-content">
+                            <div class="topic-tag">#SOSAlert</div>
+                            <div class="topic-title">Emergency Response</div>
+                            <div class="topic-posts">64 posts</div>
+                        </div>
+                    </div>
+                    <div class="trending-topic">
+                        <div class="topic-number">5</div>
+                        <div class="topic-content">
+                            <div class="topic-tag">#Community</div>
+                            <div class="topic-title">Support Groups</div>
+                            <div class="topic-posts">52 posts</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
